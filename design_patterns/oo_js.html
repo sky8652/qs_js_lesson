@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    // 函数表达式
+    // 功能：让我们听到所有好的声音
+    // 使用use strict能让浏览器解析es6语法
+    // js 严格模式 激发一下es6
+    'use strict';
+      var makeSound = function(animal) {
+        // 鸭子
+        // instanceof 判断 animal 是否是 Duck 类的实例
+        if (animal instanceof Duck) {
+            console.log('嘎嘎嘎');
+        } else if (animal instanceof Dog){
+            console.log('汪汪汪');
+        } else if (animal instanceof Tiger){
+            alert('嗷嗷嗷');
+        }
+      }
+
+      class Tiger {
+          constructor () {
+              console.log('构造函数一只老虎');
+          }
+      }
+    
+    // es5 语法 没有class关键字
+    // 构建类：函数是一等对象 object的一种
+    // 对象：函数名字大写
+
+    // 来new一只鸭子 Duck类构造 嘎嘎嘎
+    // 来一条小狗 汪汪汪
+      var duck = new Duck();
+      function Duck (){
+        // 构造函数 new 的时候会自动执行
+        console.log('实例化了一只鸭子');
+      }
+
+
+    //   es6 语法里 class关键字
+    // es6 在ie10+ 才能执行  bable解决这个问题
+    // 面向对象编程 封装
+      class Dog {
+        // constructor 构造函数 面向对象的语法
+        constructor () {
+            console.log('实例化了一条狗');
+        }
+      }
+      let xb = new Dog();
+      makeSound(xb);
+      let tly = new Duck();
+      makeSound(tly);
+      let tth = new Tiger();
+      makeSound(tth);
+    </script>
+    
+</body>
+</html>
