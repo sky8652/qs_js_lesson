@@ -15,7 +15,7 @@ featured.push('芝士');
 
 const specialty = ['Meatzza', 'Spicy Mama', 'Marghrita'];
 
-// 重要的坑： push方法的返回值是 字符串的长度 length
+// 重要的坑：push方法返回的是数组长度length
 // const pizzas = featured.push(...specialty);
 // ...代表展开字符串， 能把两个字符串进行展开 排列
 const pizzas = [...featured, 'vegetable', ...specialty];
