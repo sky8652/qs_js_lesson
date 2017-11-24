@@ -1,0 +1,10 @@
+// babel 是es6的预处理工具，不完全是es6转es5,比如对于chrome，预处理就不需要转译成es5
+{
+    "presets": [["airbnb", {
+        "targrts": {
+            // 针对不同的浏览器（目标）有不同的编译版本
+            // "explorer": 6
+            "chrome": 50
+        }
+    }]]
+}
