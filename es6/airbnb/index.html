@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>let 块级作用域</title>
+</head>
+<body>
+    <script>
+        {
+            // let 定义的变量，具有块级作用域，花括号，只在此作用域内有，其他地方访问不到，有利于变量的保护，不会影响到外界
+            let a = 1;
+        }
+        // js 中变量的查找是冒泡式的，先在自己的区域内查找，如果有就用这个数值，没有的话再往上查找
+        let b = 33;
+        // console.log(a);
+        // 致命作用 可以用 try catch
+        try {
+            console.log(b);
+            a++;
+            console.log(a);
+        } catch (e) {
+            console.log(e);
+        }
+    </script>
+</body>
+</html>
