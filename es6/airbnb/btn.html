@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>let 块级作用域</title>
+</head>
+<body>
+    <a href="javascript:;" class="btn" data-index="1">按钮1</a>
+    <a href="javascript:;" class="btn" data-index="2">按钮2</a>
+    <a href="javascript:;" class="btn" data-index="3">按钮3</a>
+    <a href="javascript:;" class="btn" data-index="4">按钮4</a>
+    <a href="javascript:;" class="btn" data-index="5">按钮5</a>
+    <a href="javascript:;" class="btn" data-index="6">按钮6</a>
+    <a href="javascript:;" class="btn" data-index="7">按钮7</a>
+    <a href="javascript:;" class="btn" data-index="8">按钮8</a>
+    <a href="javascript:;" class="btn" data-index="9">按钮9</a>
+    <a href="javascript:;" class="btn" data-index="10">按钮10</a>
+</body>
+<script>
+    window.onload = function() {
+        const arrBtn = document.querySelectorAll(".btn");
+        for(var i = 0, len = arrBtn.length; i < len; i++){
+            // 这样每次点击显示都是10
+            // 异步问题  代码同步，事件执行异步
+            // 在点击之前，代码已经全部执行完毕了，这个时候i已经变成10了，因此不管点击哪个，都是显示10
+            arrBtn[i].addEventListener('click', function() {
+                console.log(i);
+            },false)
+        }
+        // 解决方案：将i的声明从 var 变成 let
+        // i 块级作用域有关  也和  变量的查找有关
+        // 这里一共有10个i  每个i都不一样  块级作用域会使得每一个i都处在一个不同的作用域，每一次循环都会产生不同的作用域也就会有不同的i
+        // 在i进行查找的时候，会先在当前的作用域内进行查找，所以变量的查找有一个作用域，每一个i都互不干扰
+
+        // 变量的查找是冒泡查找，会先查找当前的作用域，有的话就使用，没有的话就往上找更大的作用域
+
+        // 作用域：函数作用域  let 块级作用域
+
+        // const arrBtn = document.querySelectorAll(".btn");
+        console.log(arrBtn);
+        const arr = Array.from(arrBtn).filter(a => (a.dataset.index%2)==0)
+        console.log(arr);
+    }
+</script>
+</html>
