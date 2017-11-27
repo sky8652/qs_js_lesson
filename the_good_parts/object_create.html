@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>对象字面量</title>
+</head>
+<body>
+    <script>
+        // 旧版 IE 浏览器的 Object.create 是undefined，浏览器不支持es6 object 新方法
+        if (typeof Object.create !== 'function') {
+            // 手动实现 es6 的 create 方法
+            // 手动实现es6 的 map 方法
+            /*
+            * 原型对象的继承
+            * o 是传入的原型对象，类型是Object
+            * 如果浏览器不支持es6语法，就需要手动实现
+            */
+            Object.create = function(o) {
+                // F 是一个空函数，也是空的类
+                // 类 继承关系
+                var F = function() {};
+                F.prototype = o;
+                // 新鲜出炉的对象
+                return new F();
+            }
+        }
+        var stooge = {
+            "first-name": "Jerome",
+            "last-name": "Howard"
+        }
+        // toString Object
+        // Object原型对象的方法
+        // 每个对象都会有一个原型对象，默认就是Object
+        // 原型对象 继承关系 对象
+        // 引用也是两个对象之间的关系
+        // 如何将引用关系变成继承关系？
+        console.log(stooge);
+        console.log(stooge.toString());
+        // Object.create 会构建一个继承关系
+        var another_stooge = Object.create(stooge);
+        console.log(another_stooge);
+        // 如果引用了一个原型链上没有的属性或者方法，结果是undefined，比如视图another_stooge没有的属性，就会返回undefined
+        another_stooge.hasGirlFriend = false;
+        console.log(another_stooge.hasGirlFriend);//false
+        console.log(stooge.hasGirlFriend);//undefined
+        // 以上方法表示Object.create实现了继承关系，切断了引用关系
+        // 将我们的对象stooge作为原型对象，生成了一个新的对象another_stooge
+        for(key in another_stooge) {
+            // hasOwnProperty() 返回true 或 false判断key是否是属于本身
+            if(another_stooge.hasOwnProperty(key)) {
+                console.log(key);
+                console.log(another_stooge[key]);
+            }
+        }
+        // constructor/toString 来自于最顶层的Object
+        console.log(another_stooge.hasOwnProperty('constructor'));//false
+        console.log(another_stooge.hasOwnProperty('toString'));//false
+
+        // js 的动态属性
+        stooge.city = '南昌';
+        console.log(another_stooge.city);
+        // 删除一个对象的属性、值、下标
+        delete stooge.city;
+        console.log(stooge);
+
+        // var name = stooge["first-name"] + stooge["last-name"];
+        // console.log(name);
+        // console.log(`${name}`);
+
+        // var x = stooge;
+        // x.sex = '男';
+        // console.log(stooge);
+    </script>
+</body>
+</html>
