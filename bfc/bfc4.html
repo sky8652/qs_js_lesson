@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>bfc 解决侵占浮动元素的问题</title>
+    <style>
+        .one {
+            float: left;
+            width: 100px;
+            height: 100px;
+            background-color: pink;
+        }
+        .two {
+            height: 200px;
+            background-color: red;
+            /* 没有overflow的时候，one不占据位置，two就会占据所有的位置
+            但是通过添加overflow方式添加了一个BFC之后，就能找到元素 */
+            /* 原理三：解决侵占元素的问题 */
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <p>BFC就是页面上的一个隔离的独立容器，容器里面的子元素不会影响到外面元素，反之亦然</p>
+    <div class="one"></div>
+    <div class="two"></div>
+</body>
+</html>
