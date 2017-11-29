@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>BFC原理</title>
+    <!-- 经典的上下边距重叠问题，如果上下两个元素都由一个margin，那么这个margin只有一个 -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        *, *:before, *:after {
+            box-sizing: border-box;
+        }
+        .box p {
+            margin: 10px 0;
+            background-color: red;
+        }
+        /* .box p:nth-child(1) {
+            margin-bottom: 25px;
+        } */
+    </style>
+</head>
+<body>
+    <h1>BFC原理</h1>
+    <p>BFC就是页面上的一个隔离的独立容器，容器里面的子元素不会影响到外面元素，反之亦然</p>
+    <p>相邻元素间的margin会重叠在一起。本来两个元素都有margin 10像素，加起来有20像素，实质上只有10像素。</p>
+    <p>当两个元素有不一样的margin时，谁的值大就取谁的</p>
+    <p>如果要两者的间距不重叠？</p>
+    <p>创建一个BFC： block format context  给元素的父元素加一个overfolw:hidden  块级元素格式化上下文</p>
+    <p>给包裹有margin的p元素的 div 标签加上一个div 通过改变此div的属性使两个盒子分属于两个不同的BFC，以此来阻止margin重叠</p>
+    <p>在BFC的垂直方向上，边距不会重叠</p>
+    <div class="box" id="box">
+        <p>Lorem ipsum dolor sit.</p>
+        <div style="overflow:hidden">
+            <p>Lorem ipsum dolor sit.</p>
+        </div>
+        <p>Lorem ipsum dolor sit.</p>
+    </div>
+</body>
+</html>
