@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>BFC 解决浮动问题</title>
+    <style>
+        .one {
+            /* 文档流里面的 文字、标签 能将父元素撑起来，即使没有定义高度 */
+            background-color: pink;
+            /* 清除浮动的经典方式，给父元素加一个这个属性，就能清除所有子元素的浮动 */
+            /* BFC  通过这种方式  就能创建一个BFC */
+            /* 创建 BFC 的方式：float不为none 、 position不为static 、 display：inline-block、 、overflow不为visibile 可以解决垂直边距的重叠问题 */
+            /* 原理第二条  把元素设置为BFC之后 就算BFC元素高度的时候，浮动元素也会参与计算 */
+            overflow: hidden;
+        }
+        .two {
+            /* 离开了文档流  子元素已经浮起来了  父元素就不能被子元素撑起来了 */
+            float: left;
+        }
+        /* .cf:after {
+            content: "";
+            display: block;
+            clear: both;
+        } */
+    </style>
+</head>
+<body>
+    <!-- 文档流 从上到下
+    遇到了 float、absolute、relative  就会离开文档流 -->
+    <div class="one cf">
+        <div class="two">hello world</div>
+    </div>
+    你好世界！
+</body>
+</html>
