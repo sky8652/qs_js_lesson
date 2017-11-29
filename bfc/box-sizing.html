@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>box-sizing</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        *, *:before, *:after {
+            /* 重新定义了盒子的计算方式 方式更为简单、同时也解决了IE的兼容性问题 */
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+        .items {
+            
+        }
+        /* 盒子计算方式
+        IE box-sizing content+padding+border 构成 
+        chrome 只由 content 构成
+        因此需要用 盒子模型 变成IE的盒子模型计算方式 一种向IE兼容的手段*/
+        .item {
+            /* 此时的宽度是内容的宽度，而不是元素占据内容的宽度，加上去的padding不属于盒子的内容 */
+            width: 50%;
+            height: 100px;
+            background-color: #123;
+            float: left;
+            /* border-box 的计算方式不包括 margin 的值，因此加上去以后，盒子还是会掉下来 */
+            /* margin-right: 20px; */
+            padding: 10px;
+            border: 2px solid blue;
+            /* border-box 盒子模型就是border（含）以内的元素作为占位的大小
+                padding-box 是只padding（含）以内的元素作为占位的大小 */
+            /* box-sizing: border-box; */
+        }
+        .item:nth-child(2n) {
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="items">
+        <div class="item">第一个盒子</div>
+        <div class="item">第二个盒子</div>
+    </div>
+</body>
+</html>
