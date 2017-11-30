@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 作为基本的常量，不能改变
+        const name = 'ltt';
+        // 简单的数值  不允许操作
+        // name = '1';
+
+        // 数组作为复杂对象  可以进行操作
+        const arr = [1, 2];
+        arr.push(3);
+        // 不允许改变类型
+        // arr = "aa";
+
+        // 不用es6  实现const：能读取到  不能修改
+        // 不能设置  对其对象进行设置 get 方法；
+        //          让这个变量和变量查找的作用域不会经过，也就找不到变量了，但是要考虑如何读取
+        //          作用域  函数作用域  全局
+        var user = 'old';
+        user = 'new';
+        // 实现私有的属性和方法
+        // 自执行函数  这里实现了：创建了一个作用域，将变量关在里面
+        // 小知识点：声明变量不用var会将变量变成全局变量
+        // 函数作用域  外界访问不到里面
+        var User = (function() {
+            var UPPER__BOUND = 100;
+            var ctor = function() {
+
+            }
+            // 静态方法  ，  外界只能得到ctor   只能进行获得，没有set方法，不能进行修改
+            ctor.getUPPER_BOUND = function() {
+                return UPPER__BOUND;
+            }
+            // 提供出来  进行读取
+            return ctor;
+        })();
+        console.log(User.getUPPER_BOUND());
+    </script>
+</body>
+</html>
