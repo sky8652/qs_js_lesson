@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>对象的封装:图书类</title>
+    <style>
+        .box {
+            width: 200px;
+            height: 200px;
+            background-color: red;
+            /* 不加上的话  子元素的 margin-top 会影响父元素，让父元素往下掉
+              解决办法就是创建一个BFC */
+            overflow: hidden;
+        }
+        .inner {
+            width: 100px;
+            height: 100px;
+            background-color: green;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        // 封装
+        var Book = function(isbn, title, author) {
+            // 函数运行时自动生成 this  arguments
+            if(arguments.length === 0) {
+                throw new Error('没有指定isbn');
+            }
+            // isbn 不安全 需要校验
+            // this.isbn = isbn;
+            // console.log(this.checkIsbn(isbn));
+            this.setIsbn(isbn);
+            // this.title = title;
+            this.setTitle(title);
+            // this.author = author;
+            this.author = [];
+            this.setAuthor(author);
+            console.log(this.isbn);
+        }
+        Book.prototype = {
+            setIsbn: function(isbn) {
+                if(this._checkIsbn(isbn)) {
+                    this.isbn = isbn;
+                } else {
+                    throw new Error('isbn有误');
+                }
+            },
+            getIsbn: function() {
+                return this.isbn;
+            },
+            // 约定俗成：在方法前面加一个下划线，就表示这个方法是私有的
+            _checkIsbn: function(isbn) {
+                // 返回 true 或者 false
+                // 假定 9位数  正则：一种查找法。用于匹配，按照某种模式进行匹配内容  高效
+                // [0-9]{9}  一个中括号匹配一个符号，0-9表示范围，一个花括号代表长度，里面可以由两个长度，表示最少和最多{6,9}
+                // ^开始  $结束   
+                // ^强调从字符串的开始进行匹配
+                // $匹配到字符串的结束
+                // 两个斜杠说明是正则表达式
+                // Object.prototype.toString.call(/^[0-9]{9}$/) // [Object RegExp]
+                // /^[0-9]{9}$/.test(isbn) 返回值就是 true 或 false    因此可以去掉if else 的判断
+
+                // if(/^[0-9]{9}$/.test(isbn)) {
+                //     return true;
+                // } else {
+                //     return false;
+                // }
+
+                return /^[0-9]{9}$/.test(isbn);
+            },
+            setTitle: function(title) {
+                // var a = 1;
+                // this.title = title && a++;
+                // console.log(a);
+
+                this.title = title || 'No title specific';
+            },
+            getTitle: function() {
+                return this.title;
+            },
+            setAuthor: function(author) {
+                if(author) {
+                    this.author.push(author);
+                }
+            },
+            getAuthor: function() {
+                return this.author.join(',');
+            }
+        }
+        // 手机号正则    /^1[0-9]{10}$/
+        var book = new Book('123456789', 'javascript', ['self']);
+        // 此时属性还是暴露在外的
+        console.log(book.getIsbn());
+        console.log(book.isbn);
+        this.setTitle("123");
+        this.title = "234";
+        // 封装即隐藏
+        // 写类的人，暴露少一些接口   用类的人，用起来更简单，且可控    不一样
+        // checkIsbn 方法 此时是public   没有必要public让外界理解，使用的人只要能确定ISBN是否正确就行
+        // 封装：外界不需要，外界不能知道的
+        // 最快速的方法:在变量名前面加一个下划线
+        // 另一个问题,可以直接操作属性,不用通过set方法
+
+        // 设计类
+        // 做好封装的粒度  具有一定的私有性]属性和方法,确保类本身的概念完整,方便调用
+        // 私有  作用域
+        var Book = function(newIsbn, newTitle, newAuthor) {
+            // isbn title author 私有属性
+            // 局部变量  以下四个  私有  外界访问不到
+            // 理解作用域.私有属性和方法,不能用this 不能用prototypt,这样就能封装在函数内部.斩断了与外界的连接
+            // var Book = 创建了一个作用域
+            var isbn, title, author = [];
+            function checkIsbn (isbn) {
+                return /^[0-9]{9}$/.test(isbn);
+            }
+
+            this.setIsbn = function(newIsbn) {
+                if(checkIsbn(newIsbn)) {
+                    isbn = newIsbn;
+                } else {
+                    throw new Error('isbn 格式有误');
+                }
+            }
+
+            this.setTitle = function (newTitle) {
+                title = newTitle;
+            }
+
+            this.setAuthor = function (newAuthor) {
+                author.push(newAuthor);
+            }
+
+            this.getAuthor = function () {
+                return author;
+            }
+
+            this.getTitle = function () {
+                return title;
+            }
+
+            this.getIsbn = function () {
+                return isbn;
+            }
+
+            this.setIsbn(newIsbn);
+            this.setTitle(newTitle);
+            this.setAuthor(newAuthor);
+        }
+        var book = new Book('123123123', '小红书', ['self']);
+        book.getIsbn();
+    </script>
+    <div class="box">
+        <div class="inner"></div>
+    </div>
+</body>
+</html>
