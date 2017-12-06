@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>本地存储</title>
+</head>
+<body>
+    <table id="student_info">
+        <thead>
+            <tr>
+                <th>姓名</th>
+                <th>学校</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- <tr>
+                <td>李婷婷</td>
+                <td>江西财经大学</td>
+            </tr> -->
+        </tbody>
+    </table>
+    <form action="index.php" method="POST" name="userForm">
+        <!-- field用于一行一行收集信息 -->
+        <div class="field">
+            <label for="user-name">姓名</label>
+            <input type="text" name="username" id="user-name" />
+        </div>
+        <div class="field">
+            <label for="user-college">学校</label>
+            <input type="text" name="college" id="user-college">
+        </div>
+        <!-- submit 提交以后，会自动执行提交事件 -->
+        <input type="submit" value="提交" />
+    </form>
+    <script>
+        // 表单内数据的查找，标准的是用name查找
+        // 网页为表单内建了一个集合 document.forms 可以找到所有的表单  是一个集合，用name查找
+        // document.forms["userForm"]["username"] 类似方式可以按照名字查找
+        const oForm = document.forms["userForm"];
+        const oUserName = oForm["username"];
+        const oCollege = oForm["college"];
+        const arrStudents = [];
+        console.log(oForm);
+        window.onload = function() {
+            loadData();
+            oForm.addEventListener('submit', function(event) {
+                // alert('提交了表单');
+                // 阻止默认的提交行为
+                event.preventDefault();
+                // .trim() 去掉输入框内容的前后空格，避免输入一串空的字符串也要求保存
+                let name = oUserName.value.trim();
+                let college = oCollege.value.trim();
+                if (name.length>=2 && college) {
+                    // 显示到页面上
+                    const student = {
+                        // es6 的简写方式：名字和值一样的时候，只要写key就行
+                        name,
+                        college
+                    }
+                    // 如何保存用户信息
+                    // 以table的方式按照行存储
+                    // localStorage 只能存储简单值，因此可以将json对象 字符串化存储
+                    console.log(JSON.stringify(student));
+                    // localStorage 是HTML5新添的属性
+                    // localStorage.setItem('students', JSON.stringify(student));
+
+
+
+                    
+                    arrStudents.push(student);
+                    localStorage.setItem('students', JSON.stringify(arrStudents));
+
+
+                    renderStudent(student);
+                } else {
+                    alert('请输入用户名或学校');
+                }
+            }, false);
+        }
+
+        function loadData() {
+            // 先确认存储中是否有数据
+            let storStudent = JSON.parse(localStorage.getItem("students"));
+            console.log(storStudent);
+            // console.log(storStudent);
+            // 加入判断条件，不一定存储有数据，没有加判断会报错
+
+
+            
+            if(storStudent) {
+
+                storStudent.forEach(student => {
+                    arrStudents.push(student);
+                })
+                if(storStudent) {
+                    storStudent.map(student => {
+                        renderStudent(student);
+                    })
+                }
+
+
+
+                // renderStudent(storStudent);
+            } else {
+                document.querySelector("#student_info tbody").innerHTML = `<tr><td colspan="2" style="text-align:center;">当前没有数据</td></tr>`;
+            }
+        }
+
+        function renderStudent(student) {
+            let oTr = document.createElement("tr");
+            oTr.innerHTML = `<td>${student.name}</td><td>${student.college}</td>`;
+            document.querySelector("#student_info tbody").appendChild(oTr);
+            // var tBody = document.getElementsByTagName('tbody');
+            // tBody[0].innerHTML += `<tr><td>${student.name}</td><td>${student.college}</td></tr>`;
+        }
+        
+    </script>
+</body>
+</html>
