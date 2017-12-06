@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>for of</title>
+</head>
+<body>
+    <div class="box">b1</div>
+    <div class="box">b2</div>
+    <div class="box">b3</div>
+    <div class="box">b4</div>
+    <div class="box">b5</div>
+    <script>
+        const myArr = [1, 2, 3];
+        for (let index = 0, len = myArr.length; index < len; index++) {
+            // console.log(myArr[index]);
+            // break; continue;
+            if(index == 1) break;
+        }
+        // mpa 遍历要返回一个数组
+        // forEach 只负责循环  优点：简洁    缺点：没有break; continue;
+        myArr.forEach(function(value) {
+            // console.log(value);
+        });
+        // 进化循环
+
+        // for in  为 json 服务
+        // key 会转成字符串 for in 不适合数组的循环
+        // 不care key类型的话  也可以使用  不能确保顺序   适合json的遍历
+        for(let index in myArr) {
+            // console.log(index + myArr[index]);
+            // console.log(parseInt(index) + myArr[index]);
+        }
+
+        // es6 提供的最强大的遍历数据循环
+        // for of 比 forEach优秀，可以终止循环，支持break,contune
+        let i = 0; // 得到数组下标的方法
+        for(let value of myArr) {
+            if(value == 2) continue;
+            console.log(i, value);
+            i++;
+        }
+
+        // nodeList 类数组
+        const boxes = document.querySelectorAll('.box');
+        boxes.forEach(box => {
+            // console.log(box.innerHTML);
+        })
+
+        for(let box of boxes) {
+            // console.log(box.innerHTML);
+        }
+
+        const singer = 'adele';
+        for(let chr of singer) {
+            // console.log(chr + " ");
+        }
+
+        const litingting = {
+            name: "李婷婷",
+            sex: "女"
+        }
+        // json not iterable 不可遍历  迭代器
+        // for of 遍历一个不是 iterable 的 json
+        // Object.keys(litingting) 能得到json的所有key作为一个数组，根据key可以遍历json
+        // for key in 的效率不高 for key of 的效率更高
+        for(let key of Object.keys(litingting)) {
+            console.log(key + ":" + litingting[key]);
+        }
+
+        // 数组重复
+        var singers = ['adele', '周杰伦', '周杰伦', '周杰伦'];
+        // Set 能帮助消除数组中重复的内容，得到的是一个iterable
+        var uniqueSingers = new Set(singers);
+        console.log(uniqueSingers);
+        for(let singer of uniqueSingers) {
+            console.log(singer);
+        }
+
+        // for of 循环不能遍历json字符串，但是只要用Object.key()转化成iterable，也可以遍历
+    </script>
+</body>
+</html>
