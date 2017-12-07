@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- 要完成的是业务  框架 省事、高效、标准  将时间留给开发
+    bootstrap 学习是为了节省事件，把更多的精力放在业务上 -->
+
+    <!-- container 能够实现内容的居中 -->
+    <div class="container">
+        <table>
+            <div class="bs-example" data-example-id="striped-table">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>姓名</th>
+                            <th>性别</th>
+                            <th>手机号</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </table>
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3" style="height:200px;">
+                <form class="form-horizontal" name="studentForm">
+                    <div class="form-group">
+                        <label for="inputName" class="col-sm-2 control-label">姓名</label>
+                        <div class="col-sm-10">
+                            <input name="username" type="text" class="form-control" id="inputName" placeholder="请输入姓名">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputSex" class="col-sm-2 control-label">性别</label>
+                        <div class="col-sm-10">
+                            <select name="sex" class="form-control">
+                                <option value="0">请选择</option>
+                                <option value="1">男</option>
+                                <option value="2">女</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputTel" class="col-sm-2 control-label">电话</label>
+                        <div class="col-sm-10">
+                            <input name="telephone" type="tel" class="form-control" id="inputTel" placeholder="请输入手机号">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputIndex" class="col-sm-2 control-label">插入顺序</label>
+                        <div class="col-sm-10">
+                            <input name="user_index" type="number" class="form-control" id="inputIndex" placeholder="0">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-default">提交</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        const students = [];
+        // 一个空的student对象，每一次点击提交都会对其赋值
+        // const info = {};
+        // document.forms DOM提供的方法，能够获得所有表单的集合
+        const oForm = document.forms["studentForm"];
+        window.onload = function() {
+            oForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+                const info = {};
+                const newInfo = Object.create(info);
+                newInfo.name = oForm["username"].value;
+                newInfo.sex = oForm["sex"].value;
+                newInfo.telephone = oForm["telephone"].value;
+                newInfo.index = oForm["user_index"].value;
+                console.log(newInfo);
+                // students.push(newInfo);
+                if(newInfo.index < 0) {
+                    alert('不能小于0');
+                    return ;
+                } else if(newInfo.index > students.length) {
+                    students.push(newInfo);
+                } else {
+                    students.splice(newInfo.index - 1, 0, newInfo);
+                }
+                renderStudentsHtml();
+                oForm.reset();
+            }, false);
+
+            function renderStudentsHtml() {
+                document.querySelector("tbody").innerHTML = students.map((student, index) => {
+                    return `
+                        <tr>
+                            <td>${index + 1}</td>
+                            <td>${student.name}</td>
+                            <td>${student.sex==1?'男':'女'}</td>
+                            <td>${student.telephone}</td>
+                            <td><a href="javascript:;" class="btn btn-default">删除</a></td>  
+                        </tr>
+                    `
+                }).join('')
+            }
+        }
+    </script>
+</body>
+
+</html>
