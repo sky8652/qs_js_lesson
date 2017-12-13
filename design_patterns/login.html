@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>单例实现登录弹窗</title>
+    <style>
+        .login-layer {
+            width: 200px;
+            height: 200px;
+            background-color: rgba(0, 0, 0, .6);
+            text-align: center;
+            line-height: 200px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <button id="loginBtn">登录</button>
+    <script>
+        // const btn = document.getElementById('loginBtn');
+        // btn.addEventListener('click', function() {
+        //     // 变量的提升
+        //     loginLayer.style.display = 'inline-block';
+        // }, false);
+        // // 使用静态方法，将new限制为一次
+        // // 函数只能执行一次————立即执行函数
+        // // js 是 class  free 的语言   无类的语言，只有对象
+
+        // // 通过立即执行函数实现
+        // var loginLayer = (function(){
+        //     var div = document.createElement('div');
+        //     div.classList.add('login-layer');
+        //     div.innerHTML = "我是登录浮窗";
+        //     div.style.display = 'none';
+        //     document.body.appendChild(div);
+        //     return div;
+        // })();
+
+
+        // 缺点很明显。 立即执行  需要消耗资源
+        // 单例模式  函数的执行要推迟到点击按钮的那一刻
+
+        const btn = document.getElementById('loginBtn');
+        btn.addEventListener('click', function() {
+            loginLayer.getInstance();
+        }, false);
+        
+        // var loginLayer = function(){
+        //     var div = document.createElement('div');
+        //     div.classList.add('login-layer');
+        //     div.innerHTML = "我是登录浮窗";
+        //     document.body.appendChild(div);
+        //     this.instance = null;
+        // };
+
+        // loginLayer.getInstance = function(name) {
+        //     if(!this.instance) {
+        //         this.instance = new loginLayer();
+        //     }
+        //     return this.instance;
+        // }
+
+        class loginLayer {
+            constructor() {
+                this.instance = null;
+                this.init();
+            }
+            init() {
+                var div = document.createElement('div');
+                div.classList.add('login-layer');
+                div.innerHTML = "我是登录浮窗";
+                document.body.appendChild(div);
+            }
+            static getInstance() {
+                if(!this.instance) {
+                    this.instance = new loginLayer();
+                }
+                return this.instance;
+            }
+        }
+
+        // class loginLayer {
+        //     constructor() {
+        //         this.div = null;
+        //         this.instance = null;
+        //         this.init();
+        //     }
+        //     init() {
+        //         this.div = document.createElement('div');
+        //         this.div.classList.add('login-layer');
+        //         this.div.innerHTML = "我是登录浮窗";
+        //         this.div.style.display = 'none';
+        //         document.body.appendChild(this.div);
+        //     }
+        //     static getInstance(name) {
+        //         if(!this.instance) {
+        //             this.instance = new loginLayer(name);
+        //         }
+        //         return this.instance;
+        //     }
+        //     show () {
+        //         this.div.style.display = 'inline-block';
+        //     }
+        // }
+    </script>
+</body>
+</html>
