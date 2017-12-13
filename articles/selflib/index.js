@@ -15,13 +15,13 @@ const Ting = {
         
         switch(type) {
             case 1:
-                return str.replace(/(^\s+)|(\s+$)/g, "");
+                return str.replace(/(^\s+)|(\s+$)/, "");
             case 2:
-                return str.replace(/(^\s+)/g, "");
+                return str.replace(/(^\s+)/, "");
             case 3:
-                return str.replace(/(\s+&)/g, "");
+                return str.replace(/(\s+&)/, "");
             case 4:
-                return str.replace(/\s+/g, "");
+                return str.replace(/\s+/, "");
         }
 
         // return str.replace(/\s+/, "");
